@@ -47,10 +47,10 @@ function reset(data){
 };
 
 function render(state){
-  if(state.hasSearched = false){
+  if(state.hasSearched == false){
     $('.startPage').show();
     $('.resultsPage').hide();
-  }
+
   else{
     $('.resultsPage').show();
     $('.startPage').hide();
@@ -71,9 +71,12 @@ function render(state){
 
 getDataFromApi('IT', newSearch);
 
-//callback function
-
-///////Render Functions//////////////////////////
-
 
 //////Event Handlers/////////////////////////////
+$('.startPage').on('submit','#startID',function(event){
+    event.preventDefault();
+    let searchInput=$('#searchId').val();
+    getDataFromApi(searchQuery,newSearch);
+    
+
+})
