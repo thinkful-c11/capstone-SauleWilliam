@@ -13,7 +13,7 @@ function getDataFromApi(searchQuery,callback){
     const query={
       k:"270170-ThinfulC-SJOP8QJA",
       q: 'book:' + searchQuery,
-      limit: 6,
+      limit: 12,
       info: 1
      }
  //$.getJSON(baseURL, query, callback);
@@ -47,15 +47,15 @@ function newSearch(data){
   render(appState);
 }
 
-function showDetails(i){
-  if(appState.results[i].details === true){
-    appState.results[i].details = false;
-  }
-  else{
-    appState.results[i].details = true;
-  }
-  render(appState);
-}
+// function showDetails(i){
+//   if(appState.results[i].details === true){
+//     appState.results[i].details = false;
+//   }
+//   else{
+//     appState.results[i].details = true;
+//   }
+//   render(appState);
+// }
 
 function reset(data){
   appState.hasSearched= false;
@@ -90,8 +90,8 @@ function render(state){
       // else if(obj.details === false){
       //   details = `resultDetails well hidden`
       // }
-      html+= `<div class="result"><h4>${obj.title}</h4><button id="details" type="button">details</button>
-      <div class="resultDetails well hidden" id="${i}">${obj.info}</div></div>`
+      html+= `<div class="result card"><h4 class="container-fluid">${obj.title}<button class="btn btn-xs" id="details" type="button" data-toggle="collapse" data-target="#${i}" onclick="this.blur();"><span class="glyphicon glyphicon-collapse-down">&nbsp;</span></button></h4>
+      <div class="resultDetails collapse card-block" id="${i}">${obj.info}</div></div>`
 
       i = i+1
 
@@ -106,20 +106,20 @@ function render(state){
 
 //////Event Handlers/////////////////////////////
 function eventHandler(){
-  $('#buttonId').click (function(event){
+  $('#startID').submit(function(event){
     event.preventDefault();
     let searchInput= $('#searchId').val();
     getDataFromApi(searchInput,newSearch);
     // render(appState);
   });
-  $('.resultsContainer').on('click', '#details', (function (event){
-    let i = $(this).next().attr('id');
-    // console.log($(this).closest('.resultHeader').attr('id'));
-    // console.log(appState.results[i].details)
-    // showDetails(i);
-    $(`[id="${i}"]`).toggleClass('hidden');
-    // console.log($(this).next());
-  }))
+  // $('.resultsContainer').on('click', '#details', (function (event){
+  //   let i = $(this).next().attr('id');
+  //   // console.log($(this).closest('.resultHeader').attr('id'));
+  //   // console.log(appState.results[i].details)
+  //   // showDetails(i);
+  //   $(`[id="${i}"]`).toggleClass('hidden');
+  //   // console.log($(this).next());
+  // }))
 
 }
 

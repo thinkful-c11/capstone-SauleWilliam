@@ -20,29 +20,33 @@
 
 <!-- CONTENT BEGINS HERE -->
 
-<header class="container-fluid"><img class="icon" src="images/bookicon.jpg">Reader's Block.</header>
+<header class="container-fluid row"><div class="container"><div class=col-md-3><img class="icon" src="images/bookicon.jpg">Reader's Block.</div><div class=col-md-10></div></div></header>
 
 
-<div class="startPage container">
+<div class="startPage container bg">
   <form id="startID">
-      <h2>Looking for something to read?</h2>
-      <p>enter the name of a book you love, and we'll make some suggestions.</p>
-      <input type="text" id="searchId"  name="Search Here" placeholder="i.e. The Great Gatsby">
-      <button type="submit" id="buttonId" value="Submit">Submit</button>
+      <h2 class="call">Looking for something great to read?</h2>
+      <p class="instructions">Enter the name of a book you love, and we'll make some suggestions.</p>
+      <input type="text" class="form-control input-lg" id="searchId"  name="Search Here" placeholder="i.e. The Great Gatsby">
+      <span class="credits">reader's block is an app made by william and saule, based on the tastedive api</span>
+      <!-- <button class="btn btn-primary" type="submit" id="buttonId" value="Submit">Submit</button> -->
   </form>
 </div>
 
 <div class="resultsPage container" style="display:none;">
-  <div class="inputContainer">
-    <h3>You just finished <span class=booktitle></span>, but here's some information on it:</h3>
-    <div class="inputInfo well"></div> 
-  </div>
-  <div class="results">
-    <h3 class="resultsPage">Here are some other books you might enjoy:</h3>
-    <div class="resultsContainer">
-      <!-- <div class="resultHeader"><h4>Jane Eyre</h4><button type="button">details</button></div>
-      <div class="resultDetails well">Additional Info Goes here</div> -->
+<div class="row">
+    <div class="inputContainer col-md-3">
+      <h3 class="inputTitle">More info on '<span class=booktitle></span>':</h3>
+      <div class="inputInfo well"></div> 
     </div>
+    <div class="results col-md-6">
+      <h3>Might we suggest:</h3>
+      <div class="resultsContainer">
+        <!-- <div class="resultHeader"><h4>Jane Eyre</h4><button type="button">details</button></div>
+        <div class="resultDetails well">Additional Info Goes here</div> -->
+      </div>
+    </div>
+    <div class="col-md-3"></div>
   </div>
 </div>
 
