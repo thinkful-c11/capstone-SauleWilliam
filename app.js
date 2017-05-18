@@ -1,18 +1,32 @@
 const appState={
     results: [],
+    hasSearched: false,
 }
 
-const baseURL="https://tastedive.com/api/similar";
+const baseURL="http://tastedive-proxy.herokuapp.com/api/similar";
 /////////////Mod Functions////////////////////////
 function getDataFromApi(searchQuery,callback){
     const query={
       k:"270170-ThinfulC-SJOP8QJA",
-      q:'book:' + searchQuery,
+      q: searchQuery,
+      limit: 6,
+      info: 1
      }
+    $.getJSON(baseURL, query, callback);
 }
-   //callback function
 
+function modState(data){
+	console.log(data);
+	// data.similar.results.forEach(obj =>{
+	// 	appState.results.push( {
+	// 		title: obj.name,
+	// 	});
+	// });
+}
 
+getDataFromApi('IT', modState);
+
+//callback function
 
 ///////Render Functions//////////////////////////
 

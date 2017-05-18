@@ -1,24 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-     <link rel="stylesheet" type="text/css" href="">
+    <title>Reader's Block</title>
 </head>
 <body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   crossorigin="anonymous"></script>
   <script src="app.js"></script>
-<h2>What did you just finish reading?</h2>
-<form>
-     <input type="text" name="Search Here" placeholder="Search Here">
-     <button type="submit" value="Submit">Submit</button>
 
-    </form>
+<!-- CONTENT BEGINS HERE -->
 
+<header class="container-fluid"><img class="icon" src="images/bookicon.jpg">Reader's Block.</header>
+
+
+<div class="startPage container">
+  <form>
+      <h2>Looking for something to read?</h2>
+      <p>enter the name of a book you love, and we'll make some suggestions.</p>
+      <input type="text" name="Search Here" placeholder="i.e. The Great Gatsby">
+      <button type="submit" value="Submit">Submit</button>
+  </form>
+</div>
+
+<div class="resultsPage container">
+  <div class="inputContainer">
+    <h3>You just finished A BOOK, but here's some information on it:</h3>
+    <div class="inputInfo well">Info on input</div> 
+  </div>
+  <div class="results">
+    <h3>Here are some other books you might enjoy:</h3>
+    <div class="resultsContainer">
+      <div class="resultHeader"><h4>Jane Eyre</h4><button type="button">details</button></div>
+      <div class="resultDetails well">Additional Info Goes here</div>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>

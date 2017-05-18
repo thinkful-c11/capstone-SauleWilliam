@@ -1,0 +1,46 @@
+body{
+	font-family: 'Montserrat', sans-serif;
+}
+
+header{
+	background-color: #53BBB4;
+	height:50px;
+	padding-top:10px;
+	padding-bottom:10px;
+	font-family: 'Montserrat', sans-serif;
+	font-weight:500;
+	font-size:25px;
+	color:black;
+}
+
+.resultsPage{
+	text-align: center;
+}
+
+.icon{
+	height:25px;
+	margin-right:5px;
+	margin-top:-5px;
+}
+
+.startPage{
+	margin-top:5%;
+	text-align: center;
+}
+
+.hidden{
+	display:none;
+}
+
+.inputInfo{
+	width:300px;
+	display:inline-block;
+}
+
+button{
+	display:inline-block;
+}
+
+h4{
+	display:inline-block;
+}
