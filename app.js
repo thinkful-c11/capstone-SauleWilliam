@@ -1,6 +1,10 @@
 const appState={
     results: [],
     hasSearched: false,
+    userInput:{
+        title:' ',
+        description:' '
+    }
 }
 
 const baseURL="http://tastedive-proxy.herokuapp.com/api/similar";
@@ -16,12 +20,15 @@ function getDataFromApi(searchQuery,callback){
 }
 
 function modState(data){
-	console.log(data);
-	// data.similar.results.forEach(obj =>{
-	// 	appState.results.push( {
-	// 		title: obj.name,
-	// 	});
-	// });
+	//console.log(data);
+	data.similar.results.forEach(function(obj) {
+        appState.results.push({
+          title:obj.Name,
+          info:obj.wTeaser,
+          url: obj.wUrl
+      });
+      appState.userInput.title= data.Similar.Info[0].Name;
+      appState.userInput.description=data.Similar.Info[0].wTeaser;
 }
 
 getDataFromApi('IT', modState);
