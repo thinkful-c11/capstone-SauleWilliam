@@ -35,7 +35,8 @@ function newSearch(data){
     let result = {
       title: obj.Name,
       info: obj.wTeaser,
-      url: obj.wUrl
+      url: obj.wUrl,
+      details: false,
     };
     appState.results.push(result);
  });
@@ -43,6 +44,17 @@ function newSearch(data){
   appState.userInput.title= data.Similar.Info[0].Name;
   appState.userInput.description=data.Similar.Info[0].wTeaser;
   
+  render(appState);
+}
+
+function showDetails(i){
+  if(appState.results[i].details === true){
+    appState.results[i].details = false;
+  }
+  else{
+    appState.results[i].details = true;
+  }
+  render(appState);
 }
 
 function reset(data){
@@ -66,24 +78,38 @@ function render(state){
     $('.booktitle').html(`${state.userInput.title}`);
     $('.inputInfo').html(`${state.userInput.description}`);
 
-    let html = ``
+    let html = ``;
+    let i = 0;
 
     state.results.forEach(obj =>{
-      html+= `<div class="resultHeader"><h4>${obj.title}</h4><button type="button">details</button></div>
-      <div class="resultDetails well">${obj.info}</div>`
+      html+= `<div class="resultHeader" id="${i}"><h4>${obj.title}</h4><button id="details" type="button">details</button></div>
+      <div class="resultDetails well hidden" style="display: none;">${obj.info}</div>`
+
+      i = i+1
+
+      console.log(i);
+
     });
 
     $('.resultsContainer').html(html);
   }
 }
 
-getDataFromApi('IT', newSearch);
-
 
 //////Event Handlers/////////////////////////////
-$('#buttonId').click (function(event){
+function eventHandler(){
+  $('#buttonId').click (function(event){
     event.preventDefault();
-    let searchInput=$('#searchId').val();
-    getDataFromApi(searchQuery,newSearch);
-    render(appState);
-});
+    let searchInput= $('#searchId').val();
+    getDataFromApi(searchInput,newSearch);
+    // render(appState);
+  });
+  $('.resultsContainer').on('click', '#details', (function (event){
+    console.log($('.resultHeader').attr('id'))
+    let i = $('.resultHeader').attr('id');
+    showDetails(i);
+  }))
+
+}
+
+$(function(){eventHandler();});

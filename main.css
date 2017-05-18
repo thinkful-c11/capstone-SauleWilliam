@@ -33,8 +33,10 @@ header{
 }
 
 .inputInfo{
-	width:300px;
+	width:50%;
+	height:150px;
 	display:inline-block;
+	overflow:scroll;
 }
 
 button{
@@ -43,4 +45,11 @@ button{
 
 h4{
 	display:inline-block;
+}
+
+.well{
+	display:inline-block;
+	width:50%;
+	height:100px;
+	overflow: scroll;
 }
