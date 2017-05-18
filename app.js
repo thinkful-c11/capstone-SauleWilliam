@@ -16,7 +16,15 @@ function getDataFromApi(searchQuery,callback){
       limit: 6,
       info: 1
      }
-    $.getJSON(baseURL, query, callback);
+ //$.getJSON(baseURL, query, callback);
+    
+    $.ajax({
+        url: baseURL,
+        type: 'GET',
+        datatype: 'jsonp',
+        data: query,
+        success: callback
+    })
 }
 
 function newSearch(data){
@@ -51,7 +59,7 @@ function render(state){
     $('.startPage').show();
     $('.resultsPage').hide();
 
-  else{
+  }else{
     $('.resultsPage').show();
     $('.startPage').hide();
 
@@ -73,10 +81,9 @@ getDataFromApi('IT', newSearch);
 
 
 //////Event Handlers/////////////////////////////
-$('.startPage').on('submit','#startID',function(event){
+$('#buttonId').click (function(event){
     event.preventDefault();
     let searchInput=$('#searchId').val();
     getDataFromApi(searchQuery,newSearch);
-    
-
-})
+    render(appState);
+});
