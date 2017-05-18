@@ -12,7 +12,7 @@ const baseURL="http://tastedive-proxy.herokuapp.com/api/similar";
 function getDataFromApi(searchQuery,callback){
     const query={
       k:"270170-ThinfulC-SJOP8QJA",
-      q: searchQuery,
+      q: 'book:' + searchQuery,
       limit: 6,
       info: 1
      }
@@ -80,10 +80,18 @@ function render(state){
 
     let html = ``;
     let i = 0;
+    let details = ``
+
 
     state.results.forEach(obj =>{
-      html+= `<div class="resultHeader" id="${i}"><h4>${obj.title}</h4><button id="details" type="button">details</button></div>
-      <div class="resultDetails well hidden" style="display: none;">${obj.info}</div>`
+      // if(obj.details === true){
+      //   details = `resultDetails well`
+      // }
+      // else if(obj.details === false){
+      //   details = `resultDetails well hidden`
+      // }
+      html+= `<div class="result"><h4>${obj.title}</h4><button id="details" type="button">details</button>
+      <div class="resultDetails well hidden" id="${i}">${obj.info}</div></div>`
 
       i = i+1
 
@@ -105,9 +113,12 @@ function eventHandler(){
     // render(appState);
   });
   $('.resultsContainer').on('click', '#details', (function (event){
-    console.log($('.resultHeader').attr('id'))
-    let i = $('.resultHeader').attr('id');
-    showDetails(i);
+    let i = $(this).next().attr('id');
+    // console.log($(this).closest('.resultHeader').attr('id'));
+    // console.log(appState.results[i].details)
+    // showDetails(i);
+    $(`[id="${i}"]`).toggleClass('hidden');
+    // console.log($(this).next());
   }))
 
 }
