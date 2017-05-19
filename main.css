@@ -1,4 +1,4 @@
-/*/*/*/*/*body{
+body{
 	font-family: 'Montserrat', sans-serif;
 }
 
@@ -33,12 +33,12 @@ header{
 	display:none;
 }
 
-/*.inputInfo{
+.inputInfo{
 	width:50%;
 	height:150px;
 	display:inline-block;
 	overflow:scroll;
-}*/
+}
 
 
 h4{
@@ -92,5 +92,3 @@ h4.container-fluid{
 	display:block;
 	color:lightgray;
 }
-
-*/*/*/*/*/

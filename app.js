@@ -1,6 +1,6 @@
 const appState={
     results: [],
-    dataObjects:[],
+    googleQueries:[],
     hasSearched: false,
     userInput:{
         title:' ',
@@ -28,41 +28,56 @@ function getDataFromApi(searchQuery,callback){
     //     success: callback
     // });
 
-    const googleQuery={
-        q: searchQuery,
-        k: 'AIzaSyDlUC2eqrlLx06vrOll0JSi7gR7YqYi8Us'
-    };
-    $.getJSON(googleURL, googleQuery, callback);
+}
+
+function getGoogleApi(searchQuery, position){
+
+  const googleQuery={
+      q: searchQuery,
+      k: 'AIzaSyDlUC2eqrlLx06vrOll0JSi7gR7YqYi8Us'
+  };
+
+  $.getJSON(googleURL, googleQuery, data => {
+    appState.googleQueries[position] = data
+    render(appState);
+  });
 }
 
 function newSearch(data){
 
-    console.log(data);
-    appState.dataObjects.push(data);
-    console.log(appState);
+  // appState.dataObjects.push(data);
 
-    appState.hasSearched = true;
+  appState.hasSearched = true;
 
-    appState.dataObjects[0].Similar.Results.forEach(function(obj){
-      let result = {
+  // if(appState.dataObjects.length === 2){
+  data.Similar.Results.forEach(function(obj){
+
+    let result = {
         title: obj.Name,
         info: obj.wTeaser,
         url: obj.wUrl,
         details: false,
-        link:' ',
-        image:' '
-    };
+        link:'',
+        image:''
+        };
+
       appState.results.push(result);
+
+      appState.googleQueries.push(null);
+      getGoogleApi(obj.Name, appState.googleQueries.length - 1);
+
   });
 
-    appState.userInput.title= data.Similar.Info[0].Name;
-    appState.userInput.description=data.Similar.Info[0].wTeaser;
+  appState.userInput.title= data.Similar.Info[0].Name;
+  appState.userInput.description=data.Similar.Info[0].wTeaser;
 
-    appState.results.link= appState.dataObjects[1].items[0].volumeInfo.infoLink;
-    appState.results.image=appState.dataObjects[1].items[0].volumeInfo.imageLinks.thumbnail;
+  // appState.results.link= appState.dataObjects[1].items[0].volumeInfo.infoLink;
+  // appState.results.image= appState.dataObjects[1].items[0].volumeInfo.imageLinks.thumbnail;
 
-    render(appState);
-    console.log(appState);
+  // }
+
+
+  console.log(appState);
     
 }
 
@@ -86,6 +101,14 @@ function render(state){
       $('.resultsPage').hide();
 
   }else{
+      for (let i = 0; i < appState.googleQueries.length; i++){
+        if (appState.googleQueries[i] === null){
+          // loadingpage.show()
+          console.log('not ready yet');
+          return
+        }
+      }
+      console.log('boing!');
       $('.resultsPage').show();
       $('.startPage').hide();
 
