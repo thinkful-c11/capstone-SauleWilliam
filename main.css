@@ -92,3 +92,9 @@ h4.container-fluid{
 	display:block;
 	color:lightgray;
 }
+
+.coverImage{
+	float:right;
+	margin-left:5px;
+	margin-bottom:5px;
+}

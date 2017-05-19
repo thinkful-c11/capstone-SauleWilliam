@@ -34,7 +34,7 @@ function getGoogleApi(searchQuery, position){
 
   const googleQuery={
       q: searchQuery,
-      k: 'AIzaSyDlUC2eqrlLx06vrOll0JSi7gR7YqYi8Us'
+      k: 'AIzaSyB08XIJZV0A8qNojtkmczed_WZ9ZKEeqA0'
   };
 
   $.getJSON(googleURL, googleQuery, data => {
@@ -137,7 +137,7 @@ function render(state){
       }
 
         html+= `<div class="result card"><h4 class="container-fluid">${title}<button class="btn btn-xs" id="details" type="button" data-toggle="collapse" data-target="#${i}" onclick="this.blur();"><span class="glyphicon glyphicon-collapse-down">&nbsp;</span></button></h4>
-      <div class="resultDetails collapse card-block" id="${i}"> <img src="${appState.googleQueries[i].items[0].volumeInfo.imageLinks.thumbnail}"> ${obj.info}</div></div>`;
+      <div class="resultDetails collapse card-block" id="${i}"> <img class= "coverImage" src="${appState.googleQueries[i].items[0].volumeInfo.imageLinks.thumbnail}"> ${obj.info}</div></div>`;
 
         i = i+1;
 
