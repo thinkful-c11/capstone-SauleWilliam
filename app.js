@@ -8,9 +8,10 @@ const appState={
 }
 
 const baseURL="http://tastedive-proxy.herokuapp.com/api/similar";
+const googleURL='https://www.googleapis.com/books/v1/volumes';
 /////////////Mod Functions////////////////////////
 function getDataFromApi(searchQuery,callback){
-    const query={
+    const tasteQuery={
       k:"270170-ThinfulC-SJOP8QJA",
       q: 'book:' + searchQuery,
       limit: 12,
@@ -22,12 +23,20 @@ function getDataFromApi(searchQuery,callback){
         url: baseURL,
         type: 'GET',
         datatype: 'jsonp',
-        data: query,
+        data: tasteQuery,
         success: callback
-    })
+    });
+
+    const googleQuery={
+      q: searchQuery,
+      k: 'AIzaSyDlUC2eqrlLx06vrOll0JSi7gR7YqYi8Us'
+    }
+    $.getJSON(googleURL, googleQuery, callback);
 }
 
 function newSearch(data){
+
+  console.log(data);
 
   appState.hasSearched = true;
 
@@ -90,7 +99,17 @@ function render(state){
       // else if(obj.details === false){
       //   details = `resultDetails well hidden`
       // }
-      html+= `<div class="result card"><h4 class="container-fluid">${obj.title}<button class="btn btn-xs" id="details" type="button" data-toggle="collapse" data-target="#${i}" onclick="this.blur();"><span class="glyphicon glyphicon-collapse-down">&nbsp;</span></button></h4>
+
+      let title = ``
+
+      if(obj.title.length >= 40){
+        title = obj.title.substring(0, 40) + `...`
+      }
+      else{
+        title = obj.title
+      }
+
+      html+= `<div class="result card"><h4 class="container-fluid">${title}<button class="btn btn-xs" id="details" type="button" data-toggle="collapse" data-target="#${i}" onclick="this.blur();"><span class="glyphicon glyphicon-collapse-down">&nbsp;</span></button></h4>
       <div class="resultDetails collapse card-block" id="${i}">${obj.info}</div></div>`
 
       i = i+1
