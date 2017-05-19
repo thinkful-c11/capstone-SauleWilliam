@@ -2,6 +2,7 @@ const appState={
     results: [],
     googleQueries:[],
     hasSearched: false,
+    // error: false,
     userInput:{
         title:' ',
         description:' '
@@ -48,10 +49,10 @@ function newSearch(data){
   // appState.dataObjects.push(data);
 
   appState.hasSearched = true;
+  appState.error = false;
 
   // if(appState.dataObjects.length === 2){
   data.Similar.Results.forEach(function(obj){
-
     let result = {
         title: obj.Name,
         info: obj.wTeaser,
@@ -69,6 +70,12 @@ function newSearch(data){
 
   appState.userInput.title= data.Similar.Info[0].Name;
   appState.userInput.description=data.Similar.Info[0].wTeaser;
+
+  if(appState.results.length === 0){
+    appState.hasSearched = false;
+    appState.error = true;
+    render(appState);
+  }
 
   // appState.results.link= appState.dataObjects[1].items[0].volumeInfo.infoLink;
   // appState.results.image= appState.dataObjects[1].items[0].volumeInfo.imageLinks.thumbnail;
@@ -89,6 +96,7 @@ function reset(data){
     appState.hasSearched= false;
     appState.results = [];
     appState.googleQueries=[];
+    appState.error = false;
     appState.userInput = {
       title:' ',
       description:' ',
@@ -101,19 +109,23 @@ function render(state){
       $('.startPage').show();
       $('.resultsPage').hide();
       $('#searchId').val('');
-
+      if(appState.error === true){
+        $('errorDiv').show();
+      }
 
   }else{
       for (let i = 0; i < appState.googleQueries.length; i++){
         if (appState.googleQueries[i] === null){
-          // loadingpage.show()
+          $('.loader').show()
           console.log('not ready yet');
           return
         }
       }
       console.log('boing!');
+      $('.loader').hide();
       $('.resultsPage').show();
       $('.startPage').hide();
+      $('.errorDiv').hide();
 
       $('.booktitle').html(`${state.userInput.title}`);
       $('.inputInfo').html(`${state.userInput.description}`);
@@ -141,7 +153,7 @@ function render(state){
       }
 
         html+= `<div class="result card"><h4 class="container-fluid">${title}<button class="btn btn-xs" id="details" type="button" data-toggle="collapse" data-target="#${i}" onclick="this.blur();"><span class="glyphicon glyphicon-collapse-down">&nbsp;</span></button></h4>
-      <div class="resultDetails collapse card-block" id="${i}"> <img class= "coverImage" src="${appState.googleQueries[i].items[0].volumeInfo.imageLinks.thumbnail}"> ${obj.info}</div></div>`;
+      <div class="resultDetails collapse card-block" id="${i}"> <a target="_blank" href="${appState.googleQueries[i].items[0].volumeInfo.infoLink}"><img class= "coverImage" src="${appState.googleQueries[i].items[0].volumeInfo.imageLinks.thumbnail}"></a> ${obj.info}</div></div>`;
 
         i = i+1;
 
@@ -162,7 +174,7 @@ function eventHandler(){
       getDataFromApi(searchInput,newSearch);
     // render(appState);
   });
- $('.col-md-3').click(function(event){
+ $('.startOverClick').click(function(event){
    event.preventDefault();
    //$('#searchId').val('');
    reset(appState);

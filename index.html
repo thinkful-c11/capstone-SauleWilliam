@@ -20,14 +20,16 @@
 
 <!-- CONTENT BEGINS HERE -->
 
-<header class="container-fluid row"><div class="container"><div class=col-md-3><img class="icon" src="images/bookicon.jpg">Reader's Block.</div><div class=col-md-10></div></div></header>
+<header class="container-fluid row"><div class="container"><div class="col-md-3 startOverClick"><img class="icon" src="images/bookicon.jpg">Reader's Block.</div><div class=col-md-10></div></div></header>
 
 
 <div class="startPage container bg">
   <form id="startID">
       <h2 class="call">Looking for something great to read?</h2>
       <p class="instructions">Enter the name of a book you love, and we'll make some suggestions.</p>
+      <div class="errorDiv" style="display:none;">Oops! Did you enter a valid search term? You can try the name of any book, or even an author!</div>
       <input type="text" class="form-control input-lg" id="searchId"  name="Search Here" placeholder="i.e. The Great Gatsby">
+      <div class="loader" style="display:none;"></div>
       <span class="credits">reader's block is an app made by william and saule, based on the tastedive api</span>
       <!-- <button class="btn btn-primary" type="submit" id="buttonId" value="Submit">Submit</button> -->
   </form>
@@ -46,7 +48,10 @@
         <div class="resultDetails well">Additional Info Goes here</div> -->
       </div>
     </div>
-    <div class="col-md-3"> <button type="button">Start Over</button></div>
+    <div class="col-md-3">
+      <h3 class="inputTitle">Again?</h3>
+      <button class="btn btn-primary startOver startOverClick" type="button">Start Over</button>
+    </div>
   </div>
 </div>
 
