@@ -88,16 +88,20 @@ function newSearch(data){
 function reset(data){
     appState.hasSearched= false;
     appState.results = [];
+    appState.googleQueries=[];
     appState.userInput = {
       title:' ',
-      description:' '
+      description:' ',
   };
+  render(appState);
 }
 
 function render(state){
     if(state.hasSearched == false){
       $('.startPage').show();
       $('.resultsPage').hide();
+      $('#searchId').val('');
+
 
   }else{
       for (let i = 0; i < appState.googleQueries.length; i++){
@@ -158,14 +162,14 @@ function eventHandler(){
       getDataFromApi(searchInput,newSearch);
     // render(appState);
   });
-  // $('.resultsContainer').on('click', '#details', (function (event){
-  //   let i = $(this).next().attr('id');
-  //   // console.log($(this).closest('.resultHeader').attr('id'));
-  //   // console.log(appState.results[i].details)
-  //   // showDetails(i);
-  //   $(`[id="${i}"]`).toggleClass('hidden');
-  //   // console.log($(this).next());
-  // }))
+ $('.col-md-3').click(function(event){
+   event.preventDefault();
+   //$('#searchId').val('');
+   reset(appState);
+
+ });
+
+  
 
 }
 
