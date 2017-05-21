@@ -1,9 +1,12 @@
-const appState={
+
+'use strict';
+
+const appState = {
   results: [],
   googleQueries:[],
   hasSearched: false,
-    // error: false,
-  userInput:{
+  // error: false,
+  userInput: {
     title:' ',
     description:' '
   }
@@ -12,8 +15,9 @@ const appState={
 const baseURL='http://tastedive-proxy.herokuapp.com/api/similar';
 const googleURL='https://www.googleapis.com/books/v1/volumes';
 /////////////Mod Functions////////////////////////
-function getDataFromApi(searchQuery,callback){
-  const tasteQuery={
+
+function getDataFromApi(searchQuery, callback) {
+  const tasteQuery = {
     k:'270170-ThinfulC-SJOP8QJA',
     q: 'book:' + searchQuery,
     limit: 12,
@@ -31,9 +35,9 @@ function getDataFromApi(searchQuery,callback){
 
 }
 
-function getGoogleApi(searchQuery, position){
 
-  const googleQuery={
+function getGoogleApi(searchQuery, position) {
+  const googleQuery = {
     q: searchQuery,
     k: 'AIzaSyB08XIJZV0A8qNojtkmczed_WZ9ZKEeqA0'
   };
@@ -44,15 +48,15 @@ function getGoogleApi(searchQuery, position){
   });
 }
 
-function newSearch(data){
+function newSearch(data) {
 
   // appState.dataObjects.push(data);
 
   appState.hasSearched = true;
-  appState.error = false;
+  // appState.error = false; 
 
   // if(appState.dataObjects.length === 2){
-  data.Similar.Results.forEach(function(obj){
+  data.Similar.Results.forEach(function(obj) {
     let result = {
       title: obj.Name,
       info: obj.wTeaser,
@@ -68,10 +72,10 @@ function newSearch(data){
 
   });
 
-  appState.userInput.title= data.Similar.Info[0].Name;
-  appState.userInput.description=data.Similar.Info[0].wTeaser;
+  appState.userInput.title = data.Similar.Info[0].Name;
+  appState.userInput.description = data.Similar.Info[0].wTeaser;
 
-  if(appState.results.length === 0){
+  if(appState.results.length === 0) {
     appState.hasSearched = false;
     appState.error = true;
     render(appState);
@@ -83,7 +87,8 @@ function newSearch(data){
   // }
 
 
-  console.log(appState);
+  // console.log(appState);
+	//commented the above out due to eslint
     
 }
 
@@ -92,20 +97,20 @@ function newSearch(data){
 //   let
 // }
 
-function reset(data){
-  appState.hasSearched= false;
-  appState.results = [];
-  appState.googleQueries=[];
-  appState.error = false;
-  appState.userInput = {
+function reset(state){
+  state.hasSearched= false;
+  state.results = [];
+  state.googleQueries=[];
+  state.error = false;
+  state.userInput = {
     title:' ',
     description:' ',
   };
   render(appState);
 }
 
-function render(state){
-  if(state.hasSearched == false){
+function render(state) {
+  if(state.hasSearched === false){
     $('.startPage').show();
     $('.resultsPage').hide();
     $('#searchId').val('');
@@ -113,15 +118,15 @@ function render(state){
       $('errorDiv').show();
     }
 
-  }else{
-    for (let i = 0; i < appState.googleQueries.length; i++){
-      if (appState.googleQueries[i] === null){
+  } else{
+    for (let i = 0; i < appState.googleQueries.length; i++) {
+      if (appState.googleQueries[i] === null) {
         $('.loader').show();
-        console.log('not ready yet');
+        // console.log('not ready yet'); //perhaps instead of console thrown an alert? I also console, but eslint doesn't seem to like this
         return;
       }
     }
-    console.log('boing!');
+    // console.log('boing!'); //perhaps instead of console thrown an alert? I also console, but eslint doesn't seem to like this
     $('.loader').hide();
     $('.resultsPage').show();
     $('.startPage').hide();
@@ -132,10 +137,10 @@ function render(state){
 
     let html = '';
     let i = 0;
-    let details = '';
+    // let details = ''; I commented this out because it's not being used currently!
 
 
-    state.results.forEach(obj =>{
+    state.results.forEach(obj => {
       // if(obj.details === true){
       //   details = `resultDetails well`
       // }
@@ -145,17 +150,17 @@ function render(state){
 
       let title = '';
 
-      if(obj.title.length >= 40){
+      if(obj.title.length >= 40) {
         title = obj.title.substring(0, 40) + '...';
       }
-      else{
+      else {
         title = obj.title;
       }
 
-      html+= `<div class="result card"><h4 class="container-fluid">${title}<button class="btn btn-xs" id="details" type="button" data-toggle="collapse" data-target="#${i}" onclick="this.blur();"><span class="glyphicon glyphicon-collapse-down">&nbsp;</span></button></h4>
+      html += `<div class="result card"><h4 class="container-fluid">${title}<button class="btn btn-xs" id="details" type="button" data-toggle="collapse" data-target="#${i}" onclick="this.blur();"><span class="glyphicon glyphicon-collapse-down">&nbsp;</span></button></h4>
       <div class="resultDetails collapse card-block" id="${i}"> <a target="_blank" href="${appState.googleQueries[i].items[0].volumeInfo.infoLink}"><img class= "coverImage" src="${appState.googleQueries[i].items[0].volumeInfo.imageLinks.thumbnail}"></a> ${obj.info}</div></div>`;
 
-      i = i+1;
+      i = i + 1;
 
       //console.log(i);
 
@@ -167,23 +172,22 @@ function render(state){
 
 
 //////Event Handlers/////////////////////////////
-function eventHandler(){
+function eventHandler() {
   $('#startID').submit(function(event){
     event.preventDefault();
-    $('.loader').show();
     let searchInput= $('#searchId').val();
     getDataFromApi(searchInput,newSearch);
     // render(appState);
   });
-  $('.startOverClick').click(function(event){
+  $('.startOverClick').click(function(event) {
     event.preventDefault();
    //$('#searchId').val('');
     reset(appState);
 
   });
 
-  
-
 }
 
-$(function(){eventHandler();});
+$(function() {
+  eventHandler();
+});
